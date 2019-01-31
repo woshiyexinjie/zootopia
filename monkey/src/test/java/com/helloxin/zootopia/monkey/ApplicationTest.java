@@ -1,4 +1,4 @@
-package com.helloxin.zootopia;
+package com.helloxin.zootopia.monkey;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class ApplicationTest
 {
     /**
      * Rigorous Test :-)
