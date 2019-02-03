@@ -50,11 +50,8 @@ public class MovieCrawlerImpl implements MovieCrawler  {
 
         driver.close();
 
-
-
-
     }
-    
+
 
 
 }
