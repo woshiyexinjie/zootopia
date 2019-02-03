@@ -2,12 +2,15 @@ package com.helloxin.zootopia.monkey.crawler;
 
 
 
+import com.helloxin.zootopia.mouse.dao.MoviePOMapper;
+import com.helloxin.zootopia.mouse.model.MoviePO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -24,6 +27,10 @@ public class MovieCrawlerImpl implements MovieCrawler  {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Autowired
+    private MoviePOMapper moviePOMapper;
+
+
     static WebDriver driver = null;
 
     static{
@@ -39,15 +46,36 @@ public class MovieCrawlerImpl implements MovieCrawler  {
         // 这里想看看电影网站
         driver.get("https://movie.douban.com/cinema/nowplaying/hangzhou/");
 
-        List<WebElement> items = driver.findElements(By.className("list-item"));
+        List<WebElement> items = driver.findElement(By.className("lists")).findElements(By.className("list-item"));
         if(!CollectionUtils.isEmpty(items)){
             logger.info("要处理的数据 size={}",items.size());
 
             items.stream().forEach(x->{
 
-                System.out.println(x.getAttribute("data-title"));
-                System.out.println(x.getAttribute("data-director"));
-                System.out.println(x.getAttribute("data-actors"));
+                String movieName = x.getAttribute("data-title");
+                String director =x.getAttribute("data-director");
+                String actors =x.getAttribute("data-actors");
+                String release =x.getAttribute("data-release");
+                String duration =x.getAttribute("data-duration");
+                String region =x.getAttribute("data-region");
+                String score =x.getAttribute("data-score");
+                String movieDetail= x.findElement(By.className("poster")).findElement(By.className("ticket-btn")).getAttribute("href");
+
+                logger.info("movie movieNanme={},director={},actors={},release={},duration={},region={},score={},movieDetail={}",movieName,director,actors,release,duration,region,score,movieDetail);
+                MoviePO moviePO = new MoviePO();
+                moviePO.setActors(actors);
+                moviePO.setCategory(null);
+                moviePO.setDateCreate(new Date());
+                moviePO.setDateUpdate(new Date());
+                moviePO.setDirector(director);
+                moviePO.setDoubanDetail(movieDetail);
+                moviePO.setDuration(duration);
+                moviePO.setMovieName(movieName);
+                moviePO.setRegion(region);
+                moviePO.setScore(Double.valueOf(score));
+                moviePO.setSource("douban");
+                moviePO.setIsDelete((byte)0);
+                moviePOMapper.insert(moviePO);
 
             });
 
