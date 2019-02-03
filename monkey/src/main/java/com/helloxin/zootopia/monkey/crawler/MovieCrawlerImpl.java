@@ -42,7 +42,12 @@ public class MovieCrawlerImpl implements MovieCrawler  {
         List<WebElement> items = driver.findElements(By.className("list-item"));
         if(!CollectionUtils.isEmpty(items)){
             logger.info("要处理的数据 size={}",items.size());
+
             items.stream().forEach(x->{
+
+                System.out.println(x.getAttribute("data-title"));
+                System.out.println(x.getAttribute("data-director"));
+                System.out.println(x.getAttribute("data-actors"));
 
             });
 

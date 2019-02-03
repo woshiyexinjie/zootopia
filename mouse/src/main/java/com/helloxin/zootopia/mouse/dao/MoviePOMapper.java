@@ -4,6 +4,7 @@ import com.helloxin.zootopia.mouse.model.MoviePO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by nandiexin on 2019/2/2.

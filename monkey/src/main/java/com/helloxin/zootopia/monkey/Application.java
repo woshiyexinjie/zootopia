@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Created by nandiexin on 2019/1/31.
  */
 @SpringBootApplication
-@MapperScan("com.helloxin")
+@MapperScan("com.helloxin.zootopia.mouse.dao")
 public class Application {
 
     public static void main(String[] args) {
