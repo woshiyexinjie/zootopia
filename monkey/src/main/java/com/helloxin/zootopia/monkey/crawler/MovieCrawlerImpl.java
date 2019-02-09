@@ -31,11 +31,11 @@ public class MovieCrawlerImpl implements MovieCrawler  {
     private MoviePOMapper moviePOMapper;
 
 
-    static WebDriver driver = null;
+
 
     static{
         System.setProperty("webdriver.chrome.driver","/usr/local/bin/chromedriver");
-        driver =new ChromeDriver();
+//        driver =new ChromeDriver();
     }
 
 
@@ -43,6 +43,8 @@ public class MovieCrawlerImpl implements MovieCrawler  {
     public void crawlerTodayMovieInfo(){
 
         logger.info("crawlerTodayMovieInfo start time ={}",new Date());
+
+        WebDriver driver = new ChromeDriver();
         // 这里想看看电影网站
         driver.get("https://movie.douban.com/cinema/nowplaying/hangzhou/");
 
@@ -76,6 +78,8 @@ public class MovieCrawlerImpl implements MovieCrawler  {
                 moviePO.setSource("douban");
                 moviePO.setIsDelete((byte)0);
                 moviePOMapper.insert(moviePO);
+
+                logger.info("insert movie id={}",moviePO.getId());
 
             });
 
