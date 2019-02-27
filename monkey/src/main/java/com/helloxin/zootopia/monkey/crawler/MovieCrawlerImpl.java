@@ -56,7 +56,7 @@ public class MovieCrawlerImpl implements MovieCrawler  {
         DesiredCapabilities cap = DesiredCapabilities.chrome();
         cap.setCapability(ChromeOptions.CAPABILITY, options);
 
-        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new ChromeDriver(cap);
 
 
 
