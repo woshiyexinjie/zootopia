@@ -24,6 +24,7 @@ import java.util.List;
 /**
  * Created by nandiexin on 2019/1/31.
  */
+@SuppressWarnings("ALL")
 @Component
 public class MovieCrawlerImpl implements MovieCrawler  {
 
