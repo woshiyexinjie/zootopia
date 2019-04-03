@@ -30,15 +30,15 @@
     </appender>
 
 
-    <logger name="com.helloxin.zootopia" additivity="false">
-        <level value="info" />
+    <logger name="com.helloxin.zootopia.monkey" additivity="false">
+        <level value="debug" />
         <appender-ref ref="STDOUT" />
         <appender-ref ref="APP_INFO" />
     </logger>
 
 
     <root>
-        <level value="info" />
+        <level value="debug" />
         <appender-ref ref="STDOUT" />
         <appender-ref ref="APP_INFO" />
     </root>

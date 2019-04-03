@@ -19,6 +19,7 @@
   <modules>
     <module>monkey</module>
       <module>mouse</module>
+      <module>swordfish</module>
   </modules>
 
   <name>zootopia</name>
