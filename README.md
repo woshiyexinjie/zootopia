@@ -16,3 +16,10 @@
 
 ## peacock ##  
 这个应该用来写页面呀 但是不知该怎么写的好  
+
+## swordfish ##
+因为其他服务可能用到一个全局递增id，而且服务是可以分布式，而且互不影响
+&ensp;&ensp;1.XinSnowWorkIdGenerator 参考Twitter_Snowflake算法
+&ensp;&ensp;0 - 0000000000 0000000000 0000000000 0000000000 0 - 00000 - 00000 - 000000000000
+&ensp;&ensp;2.XinImproveSnowGenerator 改进Twitter_Snowflake算法 感觉更实用 生成的订单是固定长度的，加大了时间戳序列的长度
+&ensp;&ensp;01 - 0000000000 0000000000 0000000000 0000000000 000 - 0000000 - 000000000000 
