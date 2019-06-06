@@ -21,6 +21,7 @@
         <module>mouse</module>
         <module>swordfish</module>
         <module>magpie_sso</module>
+        <module>cat_lottery</module>
     </modules>
 
     <name>zootopia</name>
