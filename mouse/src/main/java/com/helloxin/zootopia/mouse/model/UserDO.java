@@ -12,11 +12,11 @@ public class UserDO {
 
     private Integer id;
 
-    private  String userId;
+     String userId;
 
-    private String userName;
+     String userName;
 
-    private String userPhone;
+     String userPhone;
 
     private String password;
 
