@@ -2,6 +2,7 @@ package com.helloxin.zootopia.cat.lottery.controller;
 
 import com.helloxin.zootopia.cat.lottery.dto.ElementDto;
 import com.helloxin.zootopia.cat.lottery.service.LottreyService;
+import com.helloxin.zootopia.dog.common.web.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +25,15 @@ public class LotteryController {
     private LottreyService lottreyService;
 
     @GetMapping("/nextLottrry")
-    public List<ElementDto> getNextLottrry(@RequestParam Integer num, @RequestParam String lotteryGame){
+    public Result<List<ElementDto>> getNextLottrry(@RequestParam Integer num, @RequestParam String lotteryGame){
 
         logger.info("getNextLottrry num={},lotteryGame={}",num,lotteryGame);
 
-
-
-        return lottreyService.getRandonLuckyUser(num,lotteryGame,false);
+        return Result.buildSuccess(lottreyService.getRandonLuckyUser(num,lotteryGame,false));
     }
 
     @PostMapping("/initElement")
-    public void initElement(@RequestParam("是否初始化全部样本 true 初始化，其他不处理") boolean initElement,
+    public Result initElement(@RequestParam("是否初始化全部样本 true 初始化，其他不处理") boolean initElement,
                                         @RequestParam("是否初始化全部样本 true 初始化，其他不处理") Boolean prizeClear){
 
         logger.info("getNextLottrry initElement={},prizeClear={}",initElement,prizeClear);
@@ -46,7 +45,7 @@ public class LotteryController {
             lottreyService.clearPrizeElement();
         }
 
-
+        return Result.buildSuccess("");
     }
 
 }

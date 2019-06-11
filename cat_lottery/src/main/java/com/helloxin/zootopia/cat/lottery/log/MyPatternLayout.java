@@ -7,7 +7,7 @@ import ch.qos.logback.classic.PatternLayout;
  */
 public class MyPatternLayout extends PatternLayout {
     static {
-        defaultConverterMap.put("ip", BoothConvert.class.getName());
+        defaultConverterMap.put("booth", BoothConvert.class.getName());
     }
 
 }
