@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -33,22 +34,15 @@ public class LottreyServiceImpl implements LottreyService,InitializingBean{
     //总共进行抽奖的集合
     final static List<ElementDto> candidateList = new ArrayList<>(5000);
 
+    //没有中奖的集合
+    final static List<ElementDto> unprizeList = new ArrayList<>(1000);
+
     //已经中奖的集合
     final static List<ElementDto> prizeList = new ArrayList<>(1000);
 
     @Override
     public void afterPropertiesSet() throws Exception {
 
-//        List<UserDO> userDOS = userDOMapper.selectAll();
-//
-//        if(userDOS.size()>0){
-//            for (UserDO userDO:userDOS){
-//                ElementDto elementDto = new ElementDto();
-//                elementDto.setUserId(userDO.getUserId());
-//                elementDto.setUserName(userDO.getUserName());
-//                candidateList.add(elementDto);
-//            }
-//        }
         initAllElement();
     }
 
@@ -114,41 +108,39 @@ public class LottreyServiceImpl implements LottreyService,InitializingBean{
         }else{
             return getMaybeUserNoRepeate(num,lotterGame);
         }
-
-
     }
 
     private List<ElementDto> getMaybeUserNoRepeate(int num, String lotterGame) {
 
 
-
         List<ElementDto> elist = new ArrayList<>();
-        List<UserDO> prizeUser = new ArrayList<>();
-        int size = candidateList.size();
-        while (elist.size() <  num){
-            int next = random.nextInt(size);
-            ElementDto elementDto = candidateList.get(next);
-            if(elist.contains(elementDto)){
-                continue;
-            }
-//            if(){
-//
+//        List<UserDO> prizeUser = new ArrayList<>();
+//        int size = candidateList.size();
+//        while (elist.size() <  num){
+//            int next = random.nextInt(size);
+//            ElementDto elementDto = candidateList.get(next);
+//            if(elist.contains(elementDto)){
+//                continue;
 //            }
-            UserDO userDO = new UserDO();
-            userDO.setUserId(elementDto.getUserId());
-            userDO.setUserName(elementDto.getUserName());
-            prizeUser.add(userDO);
-            elist.add(elementDto);
-            prizeList.add(elementDto);
-        }
-        //将中奖的人记录到数据库
-
-        lotteryDOMapper.addLuckuUser(prizeUser,lotterGame);
+////            if(){
+////
+////            }
+//            UserDO userDO = new UserDO();
+//            userDO.setUserId(elementDto.getUserId());
+//            userDO.setUserName(elementDto.getUserName());
+//            prizeUser.add(userDO);
+//            elist.add(elementDto);
+//            prizeList.add(elementDto);
+//        }
+//        //将中奖的人记录到数据库
+//
+//        lotteryDOMapper.addLuckuUser(prizeUser,lotterGame);
         return elist;
     }
 
     private List<ElementDto> getMaybeUserRepeate(int num, String lotterGame) {
 
+        //只是这种写法 极端一点就是会出现 AA 下一次也是AA 可能下一次又是 AA  这样目测就很不公平的样子，但是运气好爆了
         List<ElementDto> elist = new ArrayList<>();
         List<UserDO> prizeUser = new ArrayList<>();
         int size = candidateList.size();
@@ -176,13 +168,25 @@ public class LottreyServiceImpl implements LottreyService,InitializingBean{
     public void initAllElement(){
         candidateList.clear();
         List<UserDO> userDOS = userDOMapper.selectAll();
+        buildElementList(userDOS,candidateList);
+    }
 
-        if(userDOS.size()>0){
+
+    @Override
+    public void initPrizeElement(String lotteryName){
+       if(!StringUtils.isEmpty(lotteryName)){
+           List<UserDO> userDOS = lotteryDOMapper.selectAllByLotteryGame(lotteryName);
+           buildElementList(userDOS,prizeList);
+       }
+    }
+
+    private void buildElementList(List<UserDO> userDOS, List<ElementDto> elementDtos) {
+        if(userDOS!=null && userDOS.size() >0){
             for (UserDO userDO:userDOS){
                 ElementDto elementDto = new ElementDto();
                 elementDto.setUserId(userDO.getUserId());
                 elementDto.setUserName(userDO.getUserName());
-                candidateList.add(elementDto);
+                elementDtos.add(elementDto);
             }
         }
     }
