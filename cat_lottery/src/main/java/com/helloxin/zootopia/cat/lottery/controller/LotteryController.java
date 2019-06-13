@@ -25,11 +25,13 @@ public class LotteryController {
     private LottreyService lottreyService;
 
     @GetMapping("/nextLottrry")
-    public Result<List<ElementDto>> getNextLottrry(@RequestParam Integer num, @RequestParam String lotteryGame){
+    public Result<List<ElementDto>> getNextLottrry(@RequestParam Integer num,
+                                                   @RequestParam String lotteryGame,
+                                                   @RequestParam(value="是否可重复抽奖",defaultValue = "false") Boolean isRepeat){
 
         logger.info("getNextLottrry num={},lotteryGame={}",num,lotteryGame);
 
-        return Result.buildSuccess(lottreyService.getRandonLuckyUser(num,lotteryGame,false));
+        return Result.buildSuccess(lottreyService.getRandonLuckyUser(num,lotteryGame,isRepeat));
     }
 
     @PostMapping("/initElement")
@@ -46,6 +48,16 @@ public class LotteryController {
         }
 
         return Result.buildSuccess("");
+    }
+
+    @GetMapping("/getMaybeUser")
+    public Result<List<ElementDto>> getMaybeUser(@RequestParam Integer num,
+                                                 @RequestParam String lotteryGame,
+                                                 @RequestParam(value="是否可重复抽奖",defaultValue = "false") Boolean isRepeat){
+
+        logger.info("getNextLottrry num={},lotteryGame={}",num,lotteryGame);
+
+        return Result.buildSuccess(lottreyService.getMaybeUser(num,lotteryGame,false));
     }
 
 }

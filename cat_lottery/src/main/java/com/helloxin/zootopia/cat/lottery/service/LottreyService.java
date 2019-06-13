@@ -36,7 +36,16 @@ public interface LottreyService {
      */
     List<ElementDto> getMaybeUser(int num, String lotterGame, boolean isRepeat);
 
+    /**
+     * 初始化所有的抽奖样本
+     */
     void initAllElement();
 
+
+    void initPrizeElement(String lotteryName);
+
+    /**
+     * 清除掉已经中奖的集合
+     */
     void clearPrizeElement();
 }
