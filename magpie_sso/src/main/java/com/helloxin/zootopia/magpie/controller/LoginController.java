@@ -19,7 +19,7 @@ public class LoginController {
 
         logger.info("login username={},password={}",userName,password);
 
-        String token ="Hello xin!";
+        String token ="Hello XIN!";
 
         return token;
     }
