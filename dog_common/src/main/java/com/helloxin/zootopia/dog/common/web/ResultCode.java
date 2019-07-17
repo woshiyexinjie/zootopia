@@ -5,7 +5,7 @@ package com.helloxin.zootopia.dog.common.web;
  */
 public class ResultCode {
 
-    //请求数据成功
+    //请求数据成功 返回200
     final static Integer HTTP_CUSCCESS = 200;
 
     //请求数据失败
