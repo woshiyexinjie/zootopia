@@ -48,25 +48,25 @@ public class LottreyServiceImpl implements LottreyService,InitializingBean{
 
     @Override
     public List<ElementDto> getRandonLuckyUser(int num,String lotterGame,boolean isRepeat){
-        //根据num获取指定数量的获奖人，这里不可重复抽奖
+        //根据num获取指定数量的获奖人
         logger.info("num={},lotterGame={}",num,lotterGame);
-
         Long begin = System.currentTimeMillis();
 
         List<ElementDto>  elist = new ArrayList<>();
         List<UserDO> prizeUser = new ArrayList<>();
-        if(num >= candidateList.size()){
-            return candidateList;
+        if(num >= unprizeList.size()){
+            return unprizeList;
         }
-
-
-        int size = candidateList.size();
+        //这里从原来的 candidateList抽取随机数换成unprizeList的集合 是担心 5000 抽  4999 这种情况 数据很难出来 因为就一个没中奖
         while (elist.size() <  num){
+            int size = unprizeList.size();
             int next = random.nextInt(size);
-            ElementDto elementDto = candidateList.get(next);
+            ElementDto elementDto = unprizeList.get(size);
+            //当前已抽奖集合 没有
             if(elist.contains(elementDto) ){
                 continue;
             }
+            //如果是算总的抽奖集合 看是不是要去重
             if(isRepeat ==false && prizeList.contains(elementDto)){
                 continue;
             }
@@ -76,6 +76,7 @@ public class LottreyServiceImpl implements LottreyService,InitializingBean{
             prizeUser.add(userDO);
             elist.add(elementDto);
             prizeList.add(elementDto);
+            unprizeList.remove(elementDto);
         }
         //将中奖的人记录到数据库
 
@@ -114,27 +115,28 @@ public class LottreyServiceImpl implements LottreyService,InitializingBean{
 
 
         List<ElementDto> elist = new ArrayList<>();
-//        List<UserDO> prizeUser = new ArrayList<>();
-//        int size = candidateList.size();
-//        while (elist.size() <  num){
-//            int next = random.nextInt(size);
-//            ElementDto elementDto = candidateList.get(next);
-//            if(elist.contains(elementDto)){
-//                continue;
-//            }
-////            if(){
-////
-////            }
-//            UserDO userDO = new UserDO();
-//            userDO.setUserId(elementDto.getUserId());
-//            userDO.setUserName(elementDto.getUserName());
-//            prizeUser.add(userDO);
-//            elist.add(elementDto);
-//            prizeList.add(elementDto);
-//        }
-//        //将中奖的人记录到数据库
+        List<UserDO> prizeUser = new ArrayList<>();
+        int size = candidateList.size();
+        while (elist.size() <  num){
+            int next = random.nextInt(size);
+            ElementDto elementDto = unprizeList.get(next);
+            if(elist.contains(elementDto)){
+                continue;
+            }
+//            if(){
 //
-//        lotteryDOMapper.addLuckuUser(prizeUser,lotterGame);
+//            }
+            UserDO userDO = new UserDO();
+            userDO.setUserId(elementDto.getUserId());
+            userDO.setUserName(elementDto.getUserName());
+            prizeUser.add(userDO);
+            elist.add(elementDto);
+            prizeList.add(elementDto);
+            unprizeList.remove(elementDto);
+        }
+        //将中奖的人记录到数据库
+
+        lotteryDOMapper.addLuckuUser(prizeUser,lotterGame);
         return elist;
     }
 
@@ -146,7 +148,7 @@ public class LottreyServiceImpl implements LottreyService,InitializingBean{
         int size = candidateList.size();
         while (elist.size() <  num){
             int next = random.nextInt(size);
-            ElementDto elementDto = candidateList.get(next);
+            ElementDto elementDto = unprizeList.get(next);
             if(elist.contains(elementDto)){
                 continue;
             }
@@ -156,9 +158,9 @@ public class LottreyServiceImpl implements LottreyService,InitializingBean{
             prizeUser.add(userDO);
             elist.add(elementDto);
             prizeList.add(elementDto);
+            unprizeList.remove(elementDto);
         }
         //将中奖的人记录到数据库
-
         lotteryDOMapper.addLuckuUser(prizeUser,lotterGame);
         return elist;
     }
@@ -169,6 +171,8 @@ public class LottreyServiceImpl implements LottreyService,InitializingBean{
         candidateList.clear();
         List<UserDO> userDOS = userDOMapper.selectAll();
         buildElementList(userDOS,candidateList);
+        //初始化的时候 没有中奖的样本和总的样本保持一致
+        unprizeList.addAll(candidateList);
     }
 
 

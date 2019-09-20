@@ -2,7 +2,7 @@
 <configuration>
 
     <property name="LOG_DIR" value="logs" />
-    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %booth [%C:%L] %-5level  %msg%n"/>
+    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%linkId] [%C:%L] %-5level  %msg%n"/>
     <!-- 自定义 Convert-->
     <!--<conversionRule conversionWord="ip" converterClass="com.helloxin.cat.lottery.log.BoothConvert" />-->
 
