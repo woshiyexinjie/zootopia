@@ -4,6 +4,8 @@ import com.helloxin.zootopia.monkey.crawler.MovieCrawler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +23,7 @@ public class CrawlerController {
     @Autowired
     private MovieCrawler movieCrawler;
 
-    @RequestMapping("crawlerDouban")
+    @PostMapping("crawlerDouban")
     public void crawlerDoubanMovie() {
 
         Instant begin = Instant.now();
@@ -31,5 +33,10 @@ public class CrawlerController {
 
         Instant end = Instant.now();
         logger.info("reportCurrentTime end time={},duration={}", end, Duration.between(begin,end).getNano()/1000);
+    }
+
+    @GetMapping("test")
+    public void test() {
+        logger.info("test");
     }
 }

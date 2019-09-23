@@ -2,12 +2,11 @@
 <configuration>
 
     <property name="LOG_DIR" value="logs" />
-    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%C:%L] %-5level  %msg%n"/>
-
+    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%linkId]  [%C:%L] %-5level  %msg%n"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="ch.qos.logback.classic.PatternLayout">
+            <layout class="com.helloxin.zootopia.monkey.config.MyPatternLayout">
                 <pattern>${pattern}</pattern>
             </layout>
         </encoder>
@@ -30,7 +29,7 @@
     </appender>
 
 
-    <logger name="com.helloxin.zootopia.monkey" additivity="false">
+    <logger name="com.helloxin.zootopia" additivity="false">
         <level value="debug" />
         <appender-ref ref="STDOUT" />
         <appender-ref ref="APP_INFO" />

@@ -1,5 +1,6 @@
 package com.helloxin.zootopia.goose.queue.filter;
 
+import com.helloxin.zootopia.goose.queue.utils.LinkUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,7 @@ public class LinkMonitorFilter implements Filter {
         if(StringUtils.isEmpty(linkid)){
             linkid = UUID.randomUUID().toString();
         }
+        LinkUtils.setlinkId(linkid);
         chain.doFilter(request,response);
     }
 
