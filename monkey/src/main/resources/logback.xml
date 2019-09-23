@@ -6,7 +6,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <target>System.out</target>
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="com.helloxin.zootopia.monkey.config.MyPatternLayout">
+            <layout class="com.helloxin.zootopia.goose.queue.log.MyPatternLayout">
                 <pattern>${pattern}</pattern>
             </layout>
         </encoder>
