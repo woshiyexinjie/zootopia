@@ -24,6 +24,8 @@
         <module>cat_lottery</module>
         <module>dog_common</module>
         <module>goose-queue</module>
+        <module>owl-record</module>
+        <module>zootopia-test</module>
     </modules>
 
     <name>zootopia</name>
@@ -119,4 +121,36 @@
             </plugins>
         </pluginManagement>
     </build>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun</id>
+            <name>aliyunartifactory</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>dcm</id>
+            <name>dcmartifactory</name>
+            <url>ttp://www.dcm4che.org/maven2/</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <name>aliyunartifactory</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>interval:2</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>dcm</id>
+            <name>dcmartifactory</name>
+            <url>http://www.dcm4che.org/maven2/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>interval:2</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>
