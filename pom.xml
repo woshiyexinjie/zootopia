@@ -26,6 +26,7 @@
         <module>goose-queue</module>
         <module>owl-record</module>
         <module>zootopia-test</module>
+        <module>elephant-saas</module>
     </modules>
 
     <name>zootopia</name>
